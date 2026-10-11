@@ -6,13 +6,14 @@
 #   GITEA_URL         Base URL of the Gitea instance (required)
 #   GITEA_TOKEN       Gitea token with write:organization and write:repository (required)
 #   GITHUB_TOKEN      GitHub token that can read the private repositories (default: `gh auth token`)
-#   SYNC_PAIRS        Space-separated github_owner:gitea_org pairs (required), e.g. "alice:alice acme:acme"
+#   SYNC_PAIRS        Space-separated github_owner:gitea_owner pairs (required), e.g. "alice:alice acme:acme";
+#                     a Gitea owner can be an existing user or an organization
 #   INCLUDE_FORKS     1 to copy forks too (default: 0)
 #   INCLUDE_ARCHIVED  0 to skip archived repositories (default: 1)
 #   WITH_METADATA     0 to copy git data only, without issues, pull requests, releases and wiki (default: 1)
 #   DRY_RUN           1 to only print what would happen (default: 0)
 #
-# Missing Gitea organizations are created. Repositories that already exist in Gitea are skipped.
+# Gitea owners that exist neither as user nor as organization are created as organizations. Repositories that already exist in Gitea are skipped.
 set -euo pipefail
 
 die() { printf 'Error: %s\n' "$*" >&2; exit 1; }
@@ -66,6 +67,7 @@ github_repos() {
 
 ensure_org() {
   local org=$1
+  gitea_exists "/users/$org" && return
   gitea_exists "/orgs/$org" && return
   if [[ "$DRY_RUN" == 1 ]]; then
     printf 'would create organization %s\n' "$org"
