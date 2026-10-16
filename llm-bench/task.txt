@@ -1,0 +1,8 @@
+You are working in a small Python project in the current directory. Make these changes:
+
+1. Rename the module inventory/store.py to inventory/repository.py and the class Store to Repository everywhere, in code and tests. Rename tests/test_store.py to tests/test_repository.py. Afterwards no file may import inventory.store or mention the name Store.
+2. Add a method total_value(self, tag: str | None = None) -> float to Repository. It returns the sum of quantity * unit_price over all items, or only over items carrying the given tag (case-insensitive) when tag is set, rounded to 2 decimals.
+3. Add a "value" command to inventory/cli.py that prints the total value with exactly 2 decimals, honouring an optional --tag argument.
+4. Add unit tests for total_value, with and without a tag.
+
+Run `python3 -m unittest` and keep fixing until all tests pass. Work only inside the current directory. When everything passes, reply with a one-line summary.

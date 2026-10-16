@@ -16,3 +16,26 @@ Patterns render Retina-style: each XPM tile pixel covers a crisp 2×2 block of o
 
 Options: `--scale N` (px per tile pixel), `--width/--height` (canvas, default 6144×3456), `--base ROLE` (palette.txt role for the backdrop base; default `chrome`→`surface`→`canvas`), `--suffix light|dark` (override brightness-derived suffix), `--patterns P1,P2` (NsCDE backdrop names), `--tag STR` (filename tag, default `6k`). Requires `magick` (ImageMagick 7); `.pm` tiles are cached in `.cde-tiles/`.
 
+
+# llm-bench
+
+Benchmarks and a health watcher for a local llama.cpp server behind [llama-swap](https://github.com/mostlygeek/llama-swap) and an OpenAI-compatible gateway, built for one consumer GPU with MoE experts partly in system RAM. Settings live in `llm-bench/config.sh`; override them in the environment (`LLM_GATEWAY`, `LLAMA_SWAP`, `LLAMA_SWAP_CONFIG`, `SWAP_CONTAINER`, `MODEL`, `GPU_SYSFS`, `RESULTS`, …). Results go to `$RESULTS`.
+
+| Script | What it does |
+|---|---|
+| `evaluate.py URL LABEL SAMPLING [all\|tools\|coding]` | 7 tool-calling cases × 3 and 12 coding tasks scored by hidden unit tests (run in a `python:alpine` podman container) |
+| `modelbench.sh [MODEL] [RUNS]` | `evaluate.py` plus RUNS headless [Pi](https://pi.dev) runs of a multi-file refactoring task on `fixture/`, scored by `check.py` (7 checks) |
+| `ngram-ab.sh` | The same Pi task with `--spec-type ngram-mod` on and off, alternating; edits and restores `$LLAMA_SWAP_CONFIG` |
+| `splitbench.sh` | Finds a faster `--n-cpu-moe`: moves one expert layer to the GPU per step, probes a long prompt, stops before free VRAM drops under 900 MiB |
+| `speed.py`, `ctxprobe.py` | Read/write speed on a short and a long prompt |
+| `add_model.py` | Adds a candidate model to a llama-swap config (expects a `server` macro) |
+| `health.sh` | Every 30 s logs VRAM, free RAM, swap, processes stuck in the amdgpu driver and kernel GPU errors; `ALERT` lines for anything critical |
+
+Runners wait until the model has been idle for a few minutes before reloading anything. On RDNA2, overfilling VRAM can deadlock the amdgpu driver instead of failing gracefully; keep ~500 MiB free.
+
+```bash
+cd llm-bench
+LLM_GATEWAY=http://gpu-box:4000 SWAP_CONTAINER=llama-swap ./modelbench.sh my-model 3
+```
+
+Needs `podman`, `python3` with PyYAML (`add_model.py`), and `pi` for the agent runs.

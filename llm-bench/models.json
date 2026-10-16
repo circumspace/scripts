@@ -1,0 +1,21 @@
+{
+  "providers": {
+    "local": {
+      "baseUrl": "__BASE_URL__/v1",
+      "api": "openai-completions",
+      "apiKey": "none",
+      "models": [
+        {
+          "id": "__MODEL__",
+          "name": "__MODEL__",
+          "reasoning": true,
+          "input": ["text"],
+          "contextWindow": 131072,
+          "maxTokens": 16384,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+          "samplingParams": { "temperature": 0.6, "top_p": 0.95, "top_k": 20, "min_p": 0 }
+        }
+      ]
+    }
+  }
+}

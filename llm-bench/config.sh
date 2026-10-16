@@ -1,0 +1,10 @@
+# Shared settings for the llm-bench scripts. Override any of them in the environment.
+: "${LLM_GATEWAY:=http://localhost:4000}"
+: "${LLAMA_SWAP:=http://localhost:8080}"
+: "${LLAMA_SWAP_CONFIG:=$HOME/.config/llama-swap/config.yaml}"
+: "${SWAP_CONTAINER:=llama-swap}"
+: "${GATEWAY_CONTAINER:=}"
+: "${MODEL:=default}"
+: "${GPU_SYSFS:=/sys/class/drm/card1/device}"
+: "${HEALTH_LOG:=$HOME/.local/state/llm-health.log}"
+: "${RESULTS:=$HOME/.local/state/llm-bench}"
