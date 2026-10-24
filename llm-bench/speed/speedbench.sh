@@ -4,8 +4,8 @@
 # mtpbench.py (rewrite SOURCE.py, write fresh code), logs peak VRAM, then reloads RESTORE_MODEL.
 set -u
 HERE=$(cd "$(dirname "$0")" && pwd)
-. "$HERE/config.sh"
-. "$HERE/common.sh"
+. "$HERE/../config.sh"
+. "$HERE/../common.sh"
 MODEL=$1 SOURCE=$2 RESTORE=${3:-}
 OUT=$RESULTS/speedbench-$MODEL-$(date +%Y%m%d-%H%M)
 mkdir -p "$OUT"

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 EVAL=$(cd "$(dirname "$0")" && pwd)
-. "$EVAL/config.sh"
+. "$EVAL/../config.sh"
 CONFIG=$LLAMA_SWAP_CONFIG
 mkdir -p "$RESULTS"
 OUT=$RESULTS/splitbench-$(date +%Y%m%d-%H%M).log

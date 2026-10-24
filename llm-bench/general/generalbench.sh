@@ -5,8 +5,8 @@
 # Talks to llama-swap directly so a gateway's server-side tools never reach the prompts.
 set -u
 HERE=$(cd "$(dirname "$0")" && pwd)
-. "$HERE/config.sh"
-. "$HERE/common.sh"
+. "$HERE/../config.sh"
+. "$HERE/../common.sh"
 : "${LM_EVAL:=lm_eval}"
 OUT=$RESULTS/general-$(date +%Y%m%d-%H%M)
 mkdir -p "$OUT"

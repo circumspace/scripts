@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 HERE=$(cd "$(dirname "$0")" && pwd)
-. "$HERE/config.sh"
+. "$HERE/../config.sh"
 CONFIG=$LLAMA_SWAP_CONFIG
 GATEWAY=$LLM_GATEWAY
 OUT=$RESULTS/ngram-ab-$(date +%Y%m%d-%H%M)

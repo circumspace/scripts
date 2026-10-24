@@ -6,8 +6,8 @@
 #                   patched=my-image,GGML_HIP_FA_BAND_FETCH_AHEAD=0
 set -u
 HERE=$(cd "$(dirname "$0")" && pwd)
-. "$HERE/config.sh"
-. "$HERE/common.sh"
+. "$HERE/../config.sh"
+. "$HERE/../common.sh"
 : "${MODEL_FILE:?set MODEL_FILE}"
 : "${SWAP_UNIT:?set SWAP_UNIT}"
 : "${BENCH_ARGS:=-ngl 99 -fa 1 -ctk q8_0 -ctv q8_0 -b 2048 -ub 1024 -p 512 -n 0 -d 0,32768,100000 -r 1}"
