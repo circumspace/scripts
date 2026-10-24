@@ -54,6 +54,9 @@ for v in $VARIANTS; do
     adaptive) spec="--spec-type draft-mtp-adaptive" ;;
     adaptive-ngram) spec="--spec-type draft-mtp-adaptive,ngram-mod --spec-ngram-mod-n-max 256" ;;
     adaptive-ngram64) spec="--spec-type draft-mtp-adaptive,ngram-mod --spec-ngram-mod-n-max 64" ;;
+    mtp) spec="--spec-type draft-mtp" ;;
+    mtp2) spec="--spec-type draft-mtp --spec-draft-n-max 2" ;;
+    mtp2-ngram) spec="--spec-type draft-mtp,ngram-mod --spec-ngram-mod-n-max 256 --spec-draft-n-max 2" ;;
     *) log "unknown variant $v"; continue ;;
   esac
   mkdir -p "$OUT/cfg-$v"
