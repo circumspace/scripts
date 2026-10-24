@@ -1,0 +1,51 @@
+instance	difficulty	result	steps
+django__django-11880	<15 min fix	solved	39
+django__django-11951	<15 min fix	solved	54
+django__django-11964	<15 min fix	solved	28
+django__django-12193	<15 min fix	wrong fix	48
+django__django-12209	<15 min fix	step limit	150
+django__django-12276	<15 min fix	solved	41
+django__django-12304	<15 min fix	solved	52
+django__django-12308	<15 min fix	wrong fix	68
+django__django-9296	<15 min fix	solved	23
+sphinx-doc__sphinx-10323	<15 min fix	step limit	147
+sphinx-doc__sphinx-10435	<15 min fix	wrong fix	113
+sphinx-doc__sphinx-8269	<15 min fix	solved	35
+sphinx-doc__sphinx-8475	<15 min fix	solved	30
+sphinx-doc__sphinx-8721	<15 min fix	solved	122
+sphinx-doc__sphinx-9230	<15 min fix	wrong fix	50
+sphinx-doc__sphinx-9281	<15 min fix	solved	45
+sphinx-doc__sphinx-9320	<15 min fix	solved	32
+sphinx-doc__sphinx-9367	<15 min fix	solved	26
+sphinx-doc__sphinx-9698	<15 min fix	solved	46
+django__django-11790	15 min - 1 hour	no patch file	83
+django__django-11815	15 min - 1 hour	solved	55
+django__django-11848	15 min - 1 hour	wrong fix	27
+django__django-11999	15 min - 1 hour	solved	88
+django__django-12039	15 min - 1 hour	solved	40
+django__django-12050	15 min - 1 hour	solved	59
+django__django-12143	15 min - 1 hour	solved	35
+django__django-12155	15 min - 1 hour	solved	32
+django__django-12262	15 min - 1 hour	no patch file	45
+django__django-12273	15 min - 1 hour	wrong fix	114
+django__django-12406	15 min - 1 hour	no patch file	80
+django__django-12713	15 min - 1 hour	solved	35
+django__django-12774	15 min - 1 hour	solved	54
+sphinx-doc__sphinx-10466	15 min - 1 hour	solved	21
+sphinx-doc__sphinx-10673	15 min - 1 hour	step limit	150
+sphinx-doc__sphinx-7748	15 min - 1 hour	wrong fix	115
+sphinx-doc__sphinx-7757	15 min - 1 hour	solved	40
+sphinx-doc__sphinx-7985	15 min - 1 hour	no patch file	135
+sphinx-doc__sphinx-8035	15 min - 1 hour	solved	90
+sphinx-doc__sphinx-8056	15 min - 1 hour	wrong fix	85
+sphinx-doc__sphinx-8265	15 min - 1 hour	solved	136
+sphinx-doc__sphinx-8551	15 min - 1 hour	solved	122
+sphinx-doc__sphinx-8638	15 min - 1 hour	step limit	150
+django__django-11885	1-4 hours	wrong fix	82
+django__django-12325	1-4 hours	wrong fix	62
+django__django-12708	1-4 hours	solved	57
+sphinx-doc__sphinx-11510	1-4 hours	wrong fix	103
+sphinx-doc__sphinx-8548	1-4 hours	no patch file	96
+sphinx-doc__sphinx-9229	1-4 hours	wrong fix	106
+sphinx-doc__sphinx-9461	1-4 hours	wrong fix	132
+sphinx-doc__sphinx-7590	>4 hours	wrong fix	115

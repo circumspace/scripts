@@ -8,3 +8,7 @@
 : "${GPU_SYSFS:=/sys/class/drm/card1/device}"
 : "${HEALTH_LOG:=$HOME/.local/state/llm-health.log}"
 : "${RESULTS:=$HOME/.local/state/llm-bench}"
+: "${SWAP_UNIT:=}"
+: "${SWAP_IMAGE:=}"
+: "${MODELS_DIR:=$HOME/models}"
+: "${GPU_ENV:=}"

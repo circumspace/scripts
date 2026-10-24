@@ -1,0 +1,13 @@
+instance	difficulty	result	steps
+django__django-11880	<15 min fix	solved	39
+django__django-12193	<15 min fix	wrong fix	48
+sphinx-doc__sphinx-10435	<15 min fix	wrong fix	113
+sphinx-doc__sphinx-9281	<15 min fix	solved	45
+django__django-11815	15 min - 1 hour	solved	55
+django__django-11848	15 min - 1 hour	wrong fix	27
+django__django-12262	15 min - 1 hour	no patch file	45
+sphinx-doc__sphinx-10466	15 min - 1 hour	solved	21
+sphinx-doc__sphinx-8035	15 min - 1 hour	solved	90
+sphinx-doc__sphinx-8638	15 min - 1 hour	step limit	150
+django__django-11885	1-4 hours	wrong fix	82
+django__django-12708	1-4 hours	solved	57

@@ -1,0 +1,14 @@
+agent:
+  cost_limit: 0
+  step_limit: 150
+environment:
+  executable: podman
+  pull_timeout: 900
+  container_timeout: 3h
+model:
+  cost_tracking: ignore_errors
+  model_kwargs:
+    api_key: none
+    temperature: 0.6
+    top_p: 0.95
+    timeout: 1200
