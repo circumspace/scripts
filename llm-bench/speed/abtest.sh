@@ -6,8 +6,8 @@
 # holds the GPU and restarted on any exit. Jobs named in $PAUSE are SIGSTOPped for the run.
 set -u
 HERE=$(cd "$(dirname "$0")" && pwd)
-. "$HERE/config.sh"
-. "$HERE/common.sh"
+. "$HERE/../config.sh"
+. "$HERE/../common.sh"
 SOURCE=$1
 : "${IMG:?set IMG to the candidate image}"
 : "${SWAP_UNIT:?set SWAP_UNIT to the systemd --user unit that runs llama-swap}"

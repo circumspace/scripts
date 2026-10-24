@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 HERE=$(cd "$(dirname "$0")" && pwd)
-. "$HERE/config.sh"
+. "$HERE/../config.sh"
 MODEL=${1:-$MODEL}
 RUNS=${2:-3}
 GATEWAY=$LLM_GATEWAY
