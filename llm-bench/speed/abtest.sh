@@ -49,8 +49,12 @@ PROD_STOPPED=1
 systemctl --user stop "$SWAP_UNIT"
 gpu_env=(); for e in $GPU_ENV; do gpu_env+=(-e "$e"); done
 for v in $VARIANTS; do
+  ncmoe=; v_env=()
   case $v in
     same) spec=$PROD_SPEC ;;
+    ngram-auto) spec="--spec-type draft-mtp,ngram-mod" ;;
+    arena-ncmoe*) spec="--spec-type draft-mtp,ngram-mod"; ncmoe=${v#arena-ncmoe}
+      v_env=(-e "MOE_EXPERT_CACHE_MIB=${ARENA_MIB:-2000}" -e "LLAMA_ARG_MOE_CACHE_MIB=${ARENA_MIB:-2000}") ;;
     adaptive) spec="--spec-type draft-mtp-adaptive" ;;
     adaptive-ngram) spec="--spec-type draft-mtp-adaptive,ngram-mod --spec-ngram-mod-n-max 256" ;;
     adaptive-ngram64) spec="--spec-type draft-mtp-adaptive,ngram-mod --spec-ngram-mod-n-max 64" ;;
@@ -60,11 +64,15 @@ for v in $VARIANTS; do
     *) log "unknown variant $v"; continue ;;
   esac
   mkdir -p "$OUT/cfg-$v"
-  sed "s|$PROD_SPEC|$spec|" "$LLAMA_SWAP_CONFIG" > "$OUT/cfg-$v/config.yaml"
+  edits=(-e "s|$PROD_SPEC|$spec|")
+  [ -n "$ncmoe" ] && edits+=(-e "s|--n-cpu-moe [0-9]*|--n-cpu-moe $ncmoe|")
+  sed "${edits[@]}" "$LLAMA_SWAP_CONFIG" > "$OUT/cfg-$v/config.yaml"
   podman rm -f llm-ab >/dev/null 2>&1
-  podman run -d --name llm-ab --device /dev/dri --device /dev/kfd "${gpu_env[@]}" --ulimit memlock=-1:-1 \
+  podman run -d --name llm-ab --device /dev/dri --device /dev/kfd "${gpu_env[@]}" "${v_env[@]}" --ulimit memlock=-1:-1 \
     -p "127.0.0.1:$PORT:8080" -v "$MODELS_DIR:/models:ro,z" -v "$OUT/cfg-$v:/config:ro,z" "$IMG" >/dev/null
   if ! load "$MODEL"; then log "candidate-$v did not load"; podman logs --tail 30 llm-ab >> "$OUT/candidate-$v.load.log" 2>&1; continue; fi
   bench "candidate-$v"
+  podman logs llm-ab > "$OUT/candidate-$v.server.log" 2>&1
+  grep -E "moe_cache_report|moe_cache_disable|slab_init" "$OUT/candidate-$v.server.log" | tail -5 | tee -a "$OUT/run.log"
 done
 log "AB DONE"
