@@ -11,7 +11,7 @@ The largest part is `llm-bench/`: the measurements behind running a 35B mixture-
 - [`llm-bench/`](#llm-bench): benchmarks for a local llama.cpp server
 - [`omp-ppq-model-refresh`](#omp-ppq-model-refresh): keeps omp's ppq.ai model list current
 - [`gen-cde-wallpapers`](#gen-cde-wallpapers): CDE-style wallpapers for Omarchy themes
-- [`build-on-daemon.sh`](#build-on-daemonsh): builds an Arch PKGBUILD on another machine
+- [`remote-makepkg.sh`](#remote-makepkgsh): builds an Arch PKGBUILD on another machine
 - [`github-to-gitea.sh`](#github-to-giteash): copies GitHub repositories into Gitea
 
 # llm-bench
@@ -105,9 +105,9 @@ Each tile pixel becomes a sharp 2×2 block (`--scale`, default 2). The 6K image 
 
 Requires ImageMagick 7 (`magick`). Downloaded tiles are cached in `.cde-tiles/`.
 
-# build-on-daemon.sh
+# remote-makepkg.sh
 
-`./build-on-daemon.sh PKGDIR [IMAGE]` builds one Arch PKGBUILD on another machine in a throwaway podman container (`archlinux` by default) and copies the finished packages back into PKGDIR. Useful when the desktop is a laptop and the build is heavy. Expects an SSH host named `daemon`.
+`BUILD_HOST=host ./remote-makepkg.sh PKGDIR [IMAGE]` builds one Arch PKGBUILD on another machine in a throwaway podman container (`archlinux` by default) and copies the finished packages back into PKGDIR. Useful when the desktop is a laptop and the build is heavy. `BUILD_HOST` is any SSH destination that runs podman.
 
 # github-to-gitea.sh
 
