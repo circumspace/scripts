@@ -1,4 +1,4 @@
-# Home-lab scripts
+# Scripts library
 
 Small tools I wrote for my own machines: a GPU box that serves a local LLM, an Arch desktop, a self-hosted Gitea. I share them because each one solved a problem that took me longer than it should have, and someone with a similar setup may get there faster.
 
