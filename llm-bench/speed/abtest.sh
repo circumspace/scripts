@@ -43,7 +43,7 @@ wait_idle "${IDLE_MINUTES:-10}"
 for name in ${PAUSE:-}; do for p in $(pgrep -x "$name"); do kill -STOP "$p" && PAUSED+=("$p"); done; done
 log "paused: ${PAUSED[*]:-none}"
 load "$MODEL" || { log "production $MODEL not ready; aborting"; exit 1; }
-bench production
+[ "${SKIP_PRODUCTION:-0}" = 1 ] || bench production
 
 PROD_STOPPED=1
 systemctl --user stop "$SWAP_UNIT"
@@ -61,9 +61,9 @@ for v in $VARIANTS; do
     mtp) spec="--spec-type draft-mtp" ;;
     mtp2) spec="--spec-type draft-mtp --spec-draft-n-max 2" ;;
     mtp2-ngram) spec="--spec-type draft-mtp,ngram-mod --spec-ngram-mod-n-max 256 --spec-draft-n-max 2" ;;
-    dspark) spec="--spec-type draft-dspark -md /models/${DRAFT_MODEL:?set DRAFT_MODEL} -ngld 99" ;;
-    dspark-n7) spec="--spec-type draft-dspark -md /models/${DRAFT_MODEL:?set DRAFT_MODEL} -ngld 99 --spec-draft-n-max 7" ;;
-    dspark-ngram) spec="--spec-type draft-dspark,ngram-mod --spec-ngram-mod-n-max 256 -md /models/${DRAFT_MODEL:?set DRAFT_MODEL} -ngld 99" ;;
+    dspark) spec="--spec-type draft-dspark -md /models/${DRAFT_MODEL:?set DRAFT_MODEL} -ngld 99 ${DRAFT_ARGS:-}" ;;
+    dspark-n7) spec="--spec-type draft-dspark -md /models/${DRAFT_MODEL:?set DRAFT_MODEL} -ngld 99 --spec-draft-n-max 7 ${DRAFT_ARGS:-}" ;;
+    dspark-ngram) spec="--spec-type draft-dspark,ngram-mod --spec-ngram-mod-n-max 256 -md /models/${DRAFT_MODEL:?set DRAFT_MODEL} -ngld 99 ${DRAFT_ARGS:-}" ;;
     *) log "unknown variant $v"; continue ;;
   esac
   mkdir -p "$OUT/cfg-$v"
