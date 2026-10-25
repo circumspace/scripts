@@ -10,12 +10,15 @@ FUNC = re.search(r"^def (\w+)", SOURCE, re.M)[1]
 TASKS = {
     "edit": f"Here is a Python file:\n```python\n{SOURCE}\n```\nReturn the complete file with the function `{FUNC}` renamed to `{FUNC}_renamed` everywhere. Output only the full file in one python code block, no explanation.",
     "fresh": "Write a Python module implementing a thread-safe LRU cache with TTL expiry, a decorator to memoize functions with it, and unit tests using unittest. Output only code.",
+    "chat": "Explain to a curious teenager why the sky is blue at noon but red at sunset, in about 300 words.",
 }
 
 
-def run(prompt, temperature):
+def run(name, prompt, temperature):
     body = {"model": os.environ.get("MODEL", "default"), "messages": [{"role": "user", "content": prompt}], "max_tokens": 6000,
             "temperature": temperature, "cache_prompt": False}
+    if name == "chat":
+        body["chat_template_kwargs"] = {"enable_thinking": True}
     req = urllib.request.Request(URL, json.dumps(body).encode(), {"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=3600) as r:
         t = json.load(r)["timings"]
@@ -26,4 +29,4 @@ def run(prompt, temperature):
 
 for name, prompt in TASKS.items():
     for temperature in (0, 0.6):
-        print(json.dumps({"variant": sys.argv[2], "task": name, "temperature": temperature, **run(prompt, temperature)}), flush=True)
+        print(json.dumps({"variant": sys.argv[2], "task": name, "temperature": temperature, **run(name, prompt, temperature)}), flush=True)

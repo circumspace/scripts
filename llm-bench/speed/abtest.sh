@@ -61,6 +61,9 @@ for v in $VARIANTS; do
     mtp) spec="--spec-type draft-mtp" ;;
     mtp2) spec="--spec-type draft-mtp --spec-draft-n-max 2" ;;
     mtp2-ngram) spec="--spec-type draft-mtp,ngram-mod --spec-ngram-mod-n-max 256 --spec-draft-n-max 2" ;;
+    dspark) spec="--spec-type draft-dspark -md /models/${DRAFT_MODEL:?set DRAFT_MODEL} -ngld 99" ;;
+    dspark-n7) spec="--spec-type draft-dspark -md /models/${DRAFT_MODEL:?set DRAFT_MODEL} -ngld 99 --spec-draft-n-max 7" ;;
+    dspark-ngram) spec="--spec-type draft-dspark,ngram-mod --spec-ngram-mod-n-max 256 -md /models/${DRAFT_MODEL:?set DRAFT_MODEL} -ngld 99" ;;
     *) log "unknown variant $v"; continue ;;
   esac
   mkdir -p "$OUT/cfg-$v"
