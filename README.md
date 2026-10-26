@@ -86,7 +86,10 @@ Generates 6K wallpapers in the style of the Common Desktop Environment for Solar
 
 It takes one or more theme repository URLs and clones or updates each one level above this repository (`../`). From each theme's `palette.txt` it derives the Motif colorset (background, foreground, top and bottom shadow, selection). It then renders a set of NsCDE backdrop tiles into `../<theme>/backgrounds/<Pattern>-<light|dark>-6k.png`.
 
-Each tile pixel becomes a sharp 2×2 block (`--scale`, default 2). The 6K image is a @2x render of a 3K design, so it stays crisp when scaled down to 1440p or 4K.
+Patterns are sized for modern HiDPI displays: each XPM tile pixel covers a
+crisp 8×8 block of output pixels (`--scale`, default 8). The larger grain
+preserves the physical scale of the original low-DPI CDE textures when the 6K
+asset is downscaled to a modern display.
 
 ```bash
 ./gen-cde-wallpapers \

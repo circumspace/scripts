@@ -7,10 +7,10 @@ authentic Motif/Xm colorset from the theme's base color, and renders a set of
 classic CDE backdrop tile patterns as crisp 6K PNGs into
     ../<repo-name>/backgrounds/<Pattern>-<light|dark>-6k.png
 
-Patterns are rendered Retina-style: each XPM tile pixel covers --scale
-(default 2) output pixels in both axes, so the 6K asset is a @2x render of a
-~3K logical design and survives downscaling to 1440p/4K displays without
-smearing.
+Patterns are rendered for modern HiDPI displays: each XPM tile pixel covers
+--scale (default 8) output pixels in both axes. The larger grain preserves the
+physical scale of the original low-DPI CDE textures when the 6K asset is
+downscaled to a modern display.
 
 Color derivation is a faithful port of the Motif color math used by CDE and
 NsCDE's palette_colorgen (bg / fg / topShadow / bottomShadow / select).
@@ -414,13 +414,13 @@ def process_repo(url, args):
 def main():
     ap = argparse.ArgumentParser(
         description="Generate CDE-style 6K wallpapers for Omarchy themes "
-                    "(Retina-style @2x pattern rendering).",
+                    "(HiDPI-sized @8x pattern rendering).",
         epilog="Example: %(prog)s "
                "https://github.com/circumspace/omarchy-solstice-daylight-theme "
                "https://github.com/circumspace/omarchy-solstice-nightwatch-theme")
     ap.add_argument("repos", nargs="+", metavar="REPO_URL")
-    ap.add_argument("--scale", type=int, default=2,
-                    help="output pixels per XPM tile pixel (default 2 = @2x)")
+    ap.add_argument("--scale", type=int, default=8,
+                    help="output pixels per XPM tile pixel (default 8 = @8x)")
     ap.add_argument("--width", type=int, default=6144)
     ap.add_argument("--height", type=int, default=3456)
     ap.add_argument("--tag", default="6k",
