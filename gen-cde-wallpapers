@@ -38,6 +38,7 @@ WORKSPACE = SCRIPT_DIR.parent  # repos are cloned here (../)
 DEFAULT_PATTERNS = [
     "Solyaris", "Dune", "Toronto", "SandLight",
     "CircuitBoards", "Lattice", "PinStripe",
+    "RicePaper", "RakedSand", "Wooly", "Ankh",
 ]
 
 # Per-pattern colorset slot overrides. Applied after semantic_of maps an
