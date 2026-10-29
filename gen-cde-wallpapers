@@ -36,10 +36,20 @@ WORKSPACE = SCRIPT_DIR.parent  # repos are cloned here (../)
 # Curated set of classic CDE/NsCDE backdrop tiles: subtle seamless textures
 # that read well as desktop wallpaper. Override with --patterns.
 DEFAULT_PATTERNS = [
-    "Solyaris", "Dimple", "Dune", "Swirl", "Squares",
-    "Marble", "Toronto", "SandLight", "CircuitBoards",
-    "Lattice", "Concave", "Convex", "PinStripe", "Bark",
+    "Solyaris", "Dune", "Toronto", "SandLight",
+    "CircuitBoards", "Lattice", "PinStripe",
 ]
+
+# Per-pattern colorset slot overrides. Applied after semantic_of maps an
+# XPM color entry to a slot, so a tile can be nudged onto a different slot.
+# Lattice is woven entirely from bottomShadowColor + selectColor (no
+# background at all), which rendered it as a dark shadow weave on every
+# theme. Remapping its bottom shadow onto the base color turns it into a
+# tone-on-tone weave in the theme's prominent color; selectColor stays,
+# giving the subtle darker accent.
+PATTERN_SLOT_OVERRIDES = {
+    "Lattice": {"bs": "bg"},
+}
 
 TILE_URL = ("https://raw.githubusercontent.com/NsCDE/NsCDE/master/"
             "data/backdrops/{}.pm")
@@ -275,14 +285,16 @@ def semantic_of(entry, fg_luma_threshold=0.5):
     return "fg"
 
 
-def build_tile_ppm(xpm_path, colorset, scale, out_path):
+def build_tile_ppm(xpm_path, colorset, scale, out_path, pattern=None):
     """Render the XPM tile at scale px/pixel into a binary PPM."""
     w, h, cpp, colors, rows = parse_xpm(xpm_path)
+    overrides = PATTERN_SLOT_OVERRIDES.get(pattern or "", {})
 
     # Map each char string to a semantic slot, then to rgb bytes.
     table = {}
     for chars, entry in colors.items():
         slot = semantic_of(entry)
+        slot = overrides.get(slot, slot)
         hex6 = colorset[slot].lstrip("#")
         table[chars] = bytes(int(hex6[i:i + 2], 16) for i in (0, 2, 4))
 
@@ -358,7 +370,7 @@ def render_pattern(job):
     name, tile_path, colorset, scale, width, height, out_png, tmpdir = job
     try:
         tile_ppm = Path(tmpdir) / f"{name}.ppm"
-        ow, oh = build_tile_ppm(tile_path, colorset, scale, tile_ppm)
+        ow, oh = build_tile_ppm(tile_path, colorset, scale, tile_ppm, name)
         magick_tiled_png(str(tile_ppm), width, height, str(out_png))
         tile_ppm.unlink(missing_ok=True)
         return name, None
